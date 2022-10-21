@@ -1,0 +1,45 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.4'
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'java'
+	id 'groovy'
+}
+
+group = 'pl.emunowak'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+bootJar.archiveFileName = 'letterboxed.jar'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.drools:drools-core:7.73.0.Final'
+	implementation 'org.drools:drools-decisiontables:7.73.0.Final'
+	implementation 'com.google.guava:guava:31.1-jre'
+	compileOnly 'org.drools:drools-compiler:7.73.0.Final'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.codehaus.groovy:groovy-all:3.0.8'
+	testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0', {
+		exclude module: 'groovy-all'
+	}
+	testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0', {
+		exclude module: 'groovy-all'
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

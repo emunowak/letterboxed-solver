@@ -1,0 +1,99 @@
+package solver;
+
+import pl.emunowak.letterboxed.solver.fact.*
+import java.util.stream.IntStream;
+import java.util.List;
+
+dialect "java"
+
+declare MaxWordLengthFact
+    length: int
+end
+
+declare LetterIndexFact
+    index: int
+end
+
+rule "Initialize max word length"
+salience 3000
+when
+    not MaxWordLengthFact()
+then
+    insert( new MaxWordLengthFact( 1 ) );
+end
+
+rule "Setup final max word length"
+salience 3000
+when
+    $maxLengthFact: MaxWordLengthFact( $maxLength: length )
+    WordFact( $length: length > $maxLength )
+then
+    modify( $maxLengthFact ) {
+        setLength( $length )
+    }
+end
+
+rule "Initialize letter indices"
+salience 2900
+when
+    MaxWordLengthFact( $maxLength: length )
+then
+    IntStream.range( 0, $maxLength - 1 ).forEach( i -> insert( new LetterIndexFact( i ) ) );
+end
+
+rule "Delete words with missing wall letters"
+salience 2000
+when
+    LetterIndexFact( $index: index )
+    $wordFact: WordFact( $word: word, length > $index, $wordLetters: letters )
+    not WallLetterFact( $wordLetters[ $index ] == letter )
+then
+    delete( $wordFact );
+end
+
+rule "Delete words that cannot be constructed from wall letters"
+salience 1900
+when
+    LetterIndexFact( $index: index )
+    WallLetterFact( $letter: letter, $wall: wall )
+    $wordFact: WordFact( length > $index + 1, $word: word, $wordLetters: letters, letters[ $index ] == $letter )
+    not WallLetterFact( $wordLetters[ $index + 1 ] == letter, wall != $wall )
+then
+    delete( $wordFact );
+end
+
+rule "Construct one word solution"
+salience 1000
+when
+    WordFact( $word: word, $wordLetters: letters )
+    not WallLetterFact( $wordLetters not contains letter )
+then
+    insert( new ResultFact( List.of( $word ) ) );
+end
+
+rule "Construct two words solution"
+salience 900
+when
+    not ResultFact( wordsCount < 2 )
+    WordFact( $word1: word, $wordLetters1: letters, $length1: length )
+    WordFact( $word2: word, $wordLetters2: letters, $word2 != $word1, $wordLetters2[ 0 ] == $wordLetters1[ $length1 - 1 ] )
+    not WallLetterFact( $letter: letter, $wordLetters1 not contains $letter, $wordLetters2 not contains $letter )
+then
+    insert( new ResultFact( List.of( $word1, $word2 ) ) );
+end
+
+rule "Construct three words solution"
+salience 800
+when
+    not ResultFact( wordsCount < 3 )
+    WordFact( $word1: word, $wordLetters1: letters, $length1: length )
+    WordFact( $word2: word, $wordLetters2: letters, $length2: length, $word2 != $word1, $wordLetters2[ 0 ] == $wordLetters1[ $length1 - 1 ] )
+    WordFact( $word3: word, $wordLetters3: letters, $word3 != $word1, $word3 != $word2, $wordLetters3[ 0 ] == $wordLetters2[ $length2 - 1 ] )
+    not WallLetterFact( $letter: letter, $wordLetters1 not contains $letter, $wordLetters2 not contains $letter, $wordLetters3 not contains $letter )
+then
+    insert( new ResultFact( List.of( $word1, $word2, $word3 ) ) );
+end
+
+query "Get results" ()
+    item: ResultFact()
+end

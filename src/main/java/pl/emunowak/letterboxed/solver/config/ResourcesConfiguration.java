@@ -1,0 +1,57 @@
+package pl.emunowak.letterboxed.solver.config;
+
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
+@Configuration
+@PropertySource("classpath:ui.properties")
+@ComponentScan("pl.emunowak.letterboxed")
+@Getter
+public class ResourcesConfiguration {
+
+    @Value( "${error.read.file.words}" )
+    private String wordsFileReadError;
+
+    @Value( "${error.read.file.rules}" )
+    private String rulesFileReadError;
+
+    @Value( "${error.parse.rules}" )
+    private String rulesParseError;
+
+    @Value( "${message.results.header}" )
+    private String resultsHeaderMessage;
+
+    @Value( "${message.results.spacer}" )
+    private String resultsSpacerMessage;
+
+    @Value( "${message.results.empty}" )
+    private String resultsEmptyMessage;
+
+    @Value( "${message.validation.letters}" )
+    private String validationLettersMessage;
+
+    @Value( "${message.validation.length}" )
+    private String validationLengthMessage;
+
+    @Value( "${validation.length}" )
+    private int validationLength;
+
+    @Value( "${message.input.wall.letters}" )
+    private String wallLettersInputMessage;
+
+    @Value( "${message.input.walls.max}" )
+    private int maxInputWalls;
+
+    @Value( "${format.results.delimiter}" )
+    private String resultWordsDelimiter;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+}
