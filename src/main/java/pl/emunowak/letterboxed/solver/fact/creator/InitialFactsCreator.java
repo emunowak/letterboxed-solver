@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pl.emunowak.letterboxed.solver.config.ConfigurationException;
-import pl.emunowak.letterboxed.solver.config.WordsConfiguration;
+import pl.emunowak.letterboxed.solver.config.dictinary.DictionaryConfiguration;
 import pl.emunowak.letterboxed.solver.fact.Fact;
 import pl.emunowak.letterboxed.solver.fact.WordFact;
 
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InitialFactsCreator implements FactsCreator {
 
-    private final WordsConfiguration wordsConfiguration;
+    private final DictionaryConfiguration dictionaryConfiguration;
 
     @Override
     public Collection<Fact> createFacts() {
         try {
-            return wordsConfiguration.getWordsStream().map( WordFact::new ).collect( Collectors.toSet() );
+            return dictionaryConfiguration.getWordsStream().map( WordFact::new ).collect( Collectors.toSet() );
         } catch ( ConfigurationException e ) {
             System.out.println( e.getMessage() );
             return List.of();
