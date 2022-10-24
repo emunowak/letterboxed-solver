@@ -14,14 +14,26 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Getter
 public class ResourcesConfiguration {
 
-    @Value( "${error.read.file.words}" )
+    @Value( "${error.read.words}" )
     private String wordsFileReadError;
+
+    @Value( "${error.parse.words}")
+    private String wordsParseError;
+
+    @Value( "${error.parse.wall.letters}" )
+    private String wallLettersParseError;
+
+    @Value( "${error.parse.wall.length}" )
+    private String wallLengthParseError;
 
     @Value( "${error.read.file.rules}" )
     private String rulesFileReadError;
 
     @Value( "${error.parse.rules}" )
     private String rulesParseError;
+
+    @Value( "${error.solver.initialization}" )
+    private String solverInitializationError;
 
     @Value( "${message.results.header}" )
     private String resultsHeaderMessage;

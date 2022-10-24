@@ -18,7 +18,7 @@ import java.util.Collection;
 public class SolverService {
 
     private final InputReader inputReader;
-    private final RulesLoader rulesLoader;
+    private final RuleEngineBase ruleEngineBase;
     private final Solver solver;
     private final ResultFactFormatter resultFormatter;
     private final ResultPrinter resultPrinter;
@@ -37,7 +37,7 @@ public class SolverService {
     }
 
     private KieBase initializeSolverBase() {
-        return rulesLoader.initializeSolveBase();
+        return ruleEngineBase.initializeSolveBase();
     }
 
     private Collection<ResultFact> runSolver( KieBase kieBase ) {

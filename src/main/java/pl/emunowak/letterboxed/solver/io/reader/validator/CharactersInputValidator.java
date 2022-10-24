@@ -13,7 +13,7 @@ public class CharactersInputValidator extends AbstractInputValidator {
 
     private final ResourcesConfiguration textResources;
 
-    String ONLY_LETTERS_PATTERN = "^[a-zA-Z]+$";
+    private static final String ONLY_LETTERS_PATTERN = "^[a-zA-Z]+$";
 
     @Override
     public String validateAndApplyNext( String input ) throws WrongInputException {
