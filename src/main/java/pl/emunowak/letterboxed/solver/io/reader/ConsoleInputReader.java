@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import pl.emunowak.letterboxed.solver.config.ResourcesConfiguration;
-import pl.emunowak.letterboxed.solver.io.reader.validator.InputValidatorFacade;
+import pl.emunowak.letterboxed.solver.validator.input.InputValidatorFacade;
 
 import java.util.ArrayList;
 import java.util.Collection;

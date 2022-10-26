@@ -1,13 +1,14 @@
-package pl.emunowak.letterboxed.solver.io.reader.validator
+package pl.emunowak.letterboxed.solver.validator.input
 
 import pl.emunowak.letterboxed.solver.config.ResourcesConfiguration
 import pl.emunowak.letterboxed.solver.io.reader.WrongInputException
+import pl.emunowak.letterboxed.solver.validator.ValidatorChain
 import spock.lang.Specification
 
 class CharactersInputValidatorTest extends Specification {
 
     ResourcesConfiguration resourcesConfiguration = Mock()
-    InputValidatorChain validator = new CharactersInputValidator( resourcesConfiguration )
+    ValidatorChain<String, WrongInputException> validator = new CharactersInputValidator( resourcesConfiguration )
 
     private static MOCK_VALIDATION_MESSAGE = "Mock validation message"
 

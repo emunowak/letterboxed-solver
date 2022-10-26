@@ -1,13 +1,15 @@
-package pl.emunowak.letterboxed.solver.io.reader.validator
+package pl.emunowak.letterboxed.solver.validator.input
 
 import pl.emunowak.letterboxed.solver.config.ResourcesConfiguration
 import pl.emunowak.letterboxed.solver.io.reader.WrongInputException
+import pl.emunowak.letterboxed.solver.validator.ValidatorChain
+import pl.emunowak.letterboxed.solver.validator.input.MaxLengthInputValidator
 import spock.lang.Specification
 
 class MaxLengthInputValidatorTest extends Specification {
 
     ResourcesConfiguration resourcesConfiguration = Mock()
-    InputValidatorChain validator = new MaxLengthInputValidator( resourcesConfiguration )
+    ValidatorChain<String, WrongInputException> validator = new MaxLengthInputValidator( resourcesConfiguration )
 
     private static MOCK_VALIDATION_MESSAGE = "Mock validation message"
     private static MOCK_MAX_LENGTH = 5
