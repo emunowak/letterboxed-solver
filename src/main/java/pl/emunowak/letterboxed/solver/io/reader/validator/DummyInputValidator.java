@@ -3,19 +3,18 @@ package pl.emunowak.letterboxed.solver.io.reader.validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import pl.emunowak.letterboxed.solver.io.reader.WrongInputException;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class DummyInputValidator implements InputValidator {
+public class DummyInputValidator implements InputValidatorChain {
 
     @Override
-    public String validateInput( String input ) throws WrongInputException {
+    public String validateInput( String input ) {
         return input;
     }
 
     @Override
-    public void setNext( InputValidator validator ) {
+    public void setNext( InputValidatorChain validator ) {
     }
 }

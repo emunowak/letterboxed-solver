@@ -6,12 +6,12 @@ import pl.emunowak.letterboxed.solver.io.reader.WrongInputException;
 import java.util.List;
 
 @Slf4j
-public abstract class AbstractInputValidator implements InputValidator {
+public abstract class AbstractInputValidator implements InputValidatorChain {
 
-    private InputValidator nextValidator;
+    private InputValidatorChain nextValidator;
 
     @Override
-    public final void setNext( InputValidator validator ) {
+    public final void setNext( InputValidatorChain validator ) {
         this.nextValidator = validator;
     }
 
@@ -21,7 +21,7 @@ public abstract class AbstractInputValidator implements InputValidator {
         return nextValidator.validateInput( validatedInput );
     }
 
-    public static InputValidator buildChain( List<AbstractInputValidator> validators ) {
+    public static InputValidatorChain buildChain( List<AbstractInputValidator> validators ) {
         if ( validators.isEmpty() ) {
             return new DummyInputValidator();
         }

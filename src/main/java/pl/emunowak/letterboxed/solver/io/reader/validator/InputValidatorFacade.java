@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 @Slf4j
 public class InputValidatorFacade {
-    private final InputValidator headValidator;
+    private final InputValidatorChain headValidator;
 
     public InputValidatorFacade( List<AbstractInputValidator> validators ) {
         this.headValidator = AbstractInputValidator.buildChain( validators );

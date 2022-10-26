@@ -7,7 +7,7 @@ import spock.lang.Specification
 class CharactersInputValidatorTest extends Specification {
 
     ResourcesConfiguration resourcesConfiguration = Mock()
-    InputValidator validator = new CharactersInputValidator( resourcesConfiguration )
+    InputValidatorChain validator = new CharactersInputValidator( resourcesConfiguration )
 
     private static MOCK_VALIDATION_MESSAGE = "Mock validation message"
 

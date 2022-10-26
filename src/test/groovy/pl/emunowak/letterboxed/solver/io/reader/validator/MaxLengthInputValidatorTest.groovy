@@ -7,7 +7,7 @@ import spock.lang.Specification
 class MaxLengthInputValidatorTest extends Specification {
 
     ResourcesConfiguration resourcesConfiguration = Mock()
-    InputValidator validator = new MaxLengthInputValidator( resourcesConfiguration )
+    InputValidatorChain validator = new MaxLengthInputValidator( resourcesConfiguration )
 
     private static MOCK_VALIDATION_MESSAGE = "Mock validation message"
     private static MOCK_MAX_LENGTH = 5
