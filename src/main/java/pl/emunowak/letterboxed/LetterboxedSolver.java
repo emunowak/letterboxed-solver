@@ -7,10 +7,10 @@ import pl.emunowak.letterboxed.solver.SolverService;
 
 @SpringBootApplication
 @Slf4j
-public class LetterboxedApplication {
+public class LetterboxedSolver {
 
     public static void main( String[] args ) {
-        var context = SpringApplication.run( LetterboxedApplication.class, args );
+        var context = SpringApplication.run( LetterboxedSolver.class, args );
         context.getBean( SolverService.class ).run();
     }
 }
