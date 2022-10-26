@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import pl.emunowak.letterboxed.solver.config.ResourcesConfiguration;
 import pl.emunowak.letterboxed.solver.fact.Fact;
 import pl.emunowak.letterboxed.solver.fact.WallLetterFact;
 
@@ -18,7 +19,7 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class WallLettersFactsCreator implements FactsCreator {
 
-    @Setter
+    private final ResourcesConfiguration textResources;
     private List<String> inputStrings;
 
     @Override
@@ -31,6 +32,13 @@ public class WallLettersFactsCreator implements FactsCreator {
                         .collect( Collectors.toList() ) )
                 .flatMap( Collection::stream )
                 .collect( Collectors.toList() );
+    }
+
+    public void setWallLetters( List<String> wallLetters ) {
+        if( wallLetters.size() < 2 ) {
+            throw new RuntimeException( textResources.getWallsSizeError() );
+        }
+        inputStrings = wallLetters;
     }
 
     private Collection<Character> toCharCollection( String letters ) {

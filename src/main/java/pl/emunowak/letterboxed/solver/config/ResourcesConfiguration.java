@@ -32,6 +32,9 @@ public class ResourcesConfiguration {
     @Value( "${error.parse.rules}" )
     private String rulesParseError;
 
+    @Value( "${error.validate.walls.size}" )
+    private String wallsSizeError;
+
     @Value( "${error.prefix}" )
     private String errorPrefix;
 

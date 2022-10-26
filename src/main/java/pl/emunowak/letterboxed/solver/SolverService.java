@@ -41,7 +41,7 @@ public class SolverService {
 
     private void initializeWallLetterFactsCreator() {
         var wallLetters = inputReader.readInput();
-        wallLettersFactsCreator.setInputStrings( wallLetters );
+        wallLettersFactsCreator.setWallLetters( wallLetters );
     }
 
     private KieBase initializeSolverBase() {
