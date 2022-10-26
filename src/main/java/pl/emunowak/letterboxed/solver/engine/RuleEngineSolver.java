@@ -1,11 +1,13 @@
 package pl.emunowak.letterboxed.solver.engine;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.server.Cookie;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import pl.emunowak.letterboxed.solver.config.ResourcesConfiguration;
+import pl.emunowak.letterboxed.solver.engine.solution.LetterWall;
 import pl.emunowak.letterboxed.solver.engine.solution.SolutionPart;
 
 import java.util.Collection;
@@ -16,27 +18,24 @@ import java.util.Collection;
 public class RuleEngineSolver implements Solver {
 
     private final ResourcesConfiguration textResources;
-    private Collection<String> words;
-    private Collection<String> wallLetters;
+    private final LetterWall letterWall = new LetterWall();
 
     private static final String ONLY_LETTERS_PATTERN = "^[a-zA-Z]+$";
 
     @Override
-    public void initializeDictionary( Collection<String> words ) throws SolverInvalidConfigurationException {
-        validateDictionaryWords( words );
-        this.words = words;
+    public void initializeDictionary( Collection<String> words ) {
+        this.letterWall.setWords( words );
     }
 
     @Override
-    public void initializeWallLetters( Collection<String> wallLetters ) throws SolverInvalidConfigurationException {
-        validateWallLetters( wallLetters );
-        this.wallLetters = wallLetters;
+    public void initializeWallLetters( Collection<String> wallLetters ) {
+        this.letterWall.setLetters( wallLetters );
     }
 
     @Override
-    public Collection<SolutionPart> solve() throws SolverNotInitializedException {
-        if( CollectionUtils.isEmpty( words ) || CollectionUtils.isEmpty( wallLetters ) ) {
-            throw new SolverNotInitializedException( textResources.getSolverInitializationError() );
+    public Collection<SolutionPart> solve() throws SolverInvalidConfigurationException {
+        if( CollectionUtils.isEmpty( letterWall.getWords() ) || CollectionUtils.isEmpty( letterWall.getLetters() ) ) {
+            throw new SolverInvalidConfigurationException( textResources.getSolverInitializationError() );
         }
         return null;
     }
