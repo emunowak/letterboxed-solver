@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.KieBase;
 import org.springframework.stereotype.Service;
+import pl.emunowak.letterboxed.solver.config.ResourcesConfiguration;
 import pl.emunowak.letterboxed.solver.fact.ResultFact;
 import pl.emunowak.letterboxed.solver.fact.creator.WallLettersFactsCreator;
 import pl.emunowak.letterboxed.solver.io.printer.ResultFactFormatter;
@@ -23,12 +24,19 @@ public class SolverService {
     private final ResultFactFormatter resultFormatter;
     private final ResultPrinter resultPrinter;
     private final WallLettersFactsCreator wallLettersFactsCreator;
+    private final ResourcesConfiguration textResources;
 
     public void run() {
-        initializeWallLetterFactsCreator();
-        var kieBase = initializeSolverBase();
-        var resultFacts = runSolver( kieBase );
-        printResults( resultFacts );
+        try {
+            initializeWallLetterFactsCreator();
+            var kieBase = initializeSolverBase();
+            var resultFacts = runSolver( kieBase );
+            printResults( resultFacts );
+        }
+        catch ( RuntimeException e ) {
+            System.out.print( textResources.getErrorPrefix() );
+            System.out.println( e.getMessage() );
+        }
     }
 
     private void initializeWallLetterFactsCreator() {

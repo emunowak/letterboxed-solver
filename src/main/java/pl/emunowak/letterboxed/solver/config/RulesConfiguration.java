@@ -28,7 +28,7 @@ public class RulesConfiguration {
                 String fileContent = new String( inputStream.readAllBytes(), StandardCharsets.UTF_8 );
                 rules.add( fileContent );
             } catch ( IOException e ) {
-                log.error( textResources.getRulesFileReadError(), e );
+                throw new RuntimeException( textResources.getRulesFileReadError(), e );
             }
         }
         return rules;

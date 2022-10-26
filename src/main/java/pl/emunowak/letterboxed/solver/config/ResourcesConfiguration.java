@@ -32,6 +32,9 @@ public class ResourcesConfiguration {
     @Value( "${error.parse.rules}" )
     private String rulesParseError;
 
+    @Value( "${error.prefix}" )
+    private String errorPrefix;
+
     @Value( "${error.solver.initialization}" )
     private String solverInitializationError;
 
