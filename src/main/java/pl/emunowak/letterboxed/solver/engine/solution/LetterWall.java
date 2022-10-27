@@ -11,5 +11,5 @@ import java.util.Collection;
 @Data
 public class LetterWall {
     private Collection<String> words;
-    private Collection<String> letters;
+    private Collection<String> walls;
 }
